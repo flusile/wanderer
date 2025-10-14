@@ -324,7 +324,7 @@
   "read-more": "Voir plus",
   "ready-to-join": "Ready to join",
   "recalculate-elevation-data": "Recalculate elevation data",
-  "recalculating-elevation-data-hint": "Recalculating elevation data will erase the existing elevation data, if any, and replace it with data from Valhalla.",
+  "recalculating-elevation-data-hint": "Recalculer les données d'altitude effacera les données d'altitude existantes, si c'est le cas, et les remplacera par les données de Valhalla.",
   "register": "Créer un compte",
   "remote-users-cannot-edit": "Les utilisateurs distants ne peuvent pas modifier",
   "removed-trail-from": "Enlever l'itinéraire de",
