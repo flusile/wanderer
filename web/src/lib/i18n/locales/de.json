@@ -326,7 +326,7 @@
   "recalculate-elevation-data": "Höhendaten neu berechnen",
   "recalculating-elevation-data-hint": "Dies löscht existierende Höhendaten, falls vorhanden, und ersetzt sie mit Daten aus Valhalla.",
   "register": "Registrieren",
-  "remote-users-cannot-edit": "Remote users cannot edit",
+  "remote-users-cannot-edit": "Remotebenutzer können nicht bearbeiten",
   "removed-trail-from": "Route entfernt aus",
   "removed-trails-from": "Routen entfernt aus",
   "required": "Pflichtfeld",
