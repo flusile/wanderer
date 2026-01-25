@@ -56,7 +56,7 @@ func init() {
 					"type": "text"
 				},
 				{
-					"cascadeDelete": false,
+					"cascadeDelete": true,
 					"collectionId": "kjxvi8asj2igqwf",
 					"hidden": false,
 					"id": "relation105650625",
