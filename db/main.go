@@ -1286,18 +1286,67 @@ func bootstrapCategories(app core.App) error {
 	if err := query.All(&records); err != nil {
 		return err
 	}
-	if len(records) == 0 {
-		collection, _ := app.FindCollectionByNameOrId("categories")
 
-		categories := []string{"Hiking", "Walking", "Climbing", "Skiing", "Canoeing", "Biking"}
-		for _, element := range categories {
-			record := core.NewRecord(collection)
-			record.Set("name", element)
-			f, _ := filesystem.NewFileFromPath("migrations/initial_data/" + strings.ToLower(element) + ".jpg")
-			record.Set("img", f)
-			err := app.Save(record)
+	if true || len(records) == 0 {
+		// this is the initial load or admin has deleted all categories, so we re-create the default ones
+		cc, err := util.LoadCategoryConfig("migrations/initial_data/category_config.json")
+		if err != nil {
+			return err
+		}
+
+		cat_coll, _ := app.FindCollectionByNameOrId("categories")
+		i18n_coll, _ := app.FindCollectionByNameOrId("categories_i18n")
+		alias_coll, _ := app.FindCollectionByNameOrId("categories_aliases")
+
+		for _, element := range cc.Categories {
+			record := core.NewRecord(cat_coll)
+			record.Set("name", element.Name)
+			f, err := filesystem.NewFileFromPath("migrations/initial_data/" + strings.ToLower(element.Name) + ".jpg")
+			if err == nil {
+				record.Set("img", f)
+			}
+			err = app.Save(record)
 			if err != nil {
 				return err
+			}
+
+			// now all i18n entries
+			has_en := false
+			for _, i18n := range element.I18n {
+				i18nRecord := core.NewRecord(i18n_coll)
+				i18nRecord.Set("category", record.Id)
+				i18nRecord.Set("lang", i18n.Lang)
+				i18nRecord.Set("name", i18n.Name)
+				err = app.Save(i18nRecord)
+				if err != nil {
+					return err
+				}
+				if i18n.Lang == "en" {
+					has_en = true
+				}
+			}
+
+			if !has_en {
+				// ensure we have an english entry
+				i18nRecord := core.NewRecord(i18n_coll)
+				i18nRecord.Set("category", record.Id)
+				i18nRecord.Set("lang", "en")
+				i18nRecord.Set("name", element.Name)
+				err = app.Save(i18nRecord)
+				if err != nil {
+					return err
+				}
+			}
+
+			// now all alias entries
+			for _, alias := range element.Aliases {
+				aliasRecord := core.NewRecord(alias_coll)
+				aliasRecord.Set("category", record.Id)
+				aliasRecord.Set("alias", alias)
+				err = app.Save(aliasRecord)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
