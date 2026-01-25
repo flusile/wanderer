@@ -1,0 +1,694 @@
+{
+    "categories": [
+        {
+            "name": "Hiking",
+            "aliases": [
+                "hiking",
+                "walking",
+                "trekking",
+                "wandern",
+                "spazieren",
+                "spaziern",
+                "hikingtourtrail",
+                "longsistancehikingtrail"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Wandern"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Randonnée"
+                },
+                {
+                    "lang": "it",
+                    "name": "Escursionismo"
+                },
+                {
+                    "lang": "es",
+                    "name": "Senderismo"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Caminhada"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Wandelen"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Vandring"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Wędrówka"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Пеший туризм"
+                },
+                {
+                    "lang": "ja",
+                    "name": "ハイキング"
+                },
+                {
+                    "lang": "zh",
+                    "name": "徒步旅行"
+                },
+                {
+                    "lang": "ar",
+                    "name": "المشي"
+                },
+                {
+                    "lang": "hi",
+                    "name": "पैदल यात्रा"
+                },
+                {
+                    "lang": "bn",
+                    "name": "হাইকিং"
+                },
+                {
+                    "lang": "ko",
+                    "name": "하이킹"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Yürüyüş"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Đi bộ đường dài"
+                },
+                {
+                    "lang": "id",
+                    "name": "Mendaki"
+                },
+                {
+                    "lang": "th",
+                    "name": "การเดินป่า"
+                },
+                {
+                    "lang": "el",
+                    "name": "Πεζοπορία"
+                },
+                {
+                    "lang": "he",
+                    "name": "טיולים רגליים"
+                },
+                {
+                    "lang": "no",
+                    "name": "Fottur"
+                }
+            ]
+        },
+        {
+            "name": "Walking",
+            "aliases": [
+                "walking",
+                "spazieren",
+                "spaziern"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Spazieren"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Promenade"
+                },
+                {
+                    "lang": "it",
+                    "name": "Passeggiata"
+                },
+                {
+                    "lang": "es",
+                    "name": "Paseo"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Caminhada"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Wandel"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Promenad"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Spacer"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Прогулка"
+                },
+                {
+                    "lang": "ja",
+                    "name": "散歩"
+                },
+                {
+                    "lang": "zh",
+                    "name": "散步"
+                },
+                {
+                    "lang": "ar",
+                    "name": "المشي"
+                },
+                {
+                    "lang": "hi",
+                    "name": "चलना"
+                },
+                {
+                    "lang": "bn",
+                    "name": "হাঁটা"
+                },
+                {
+                    "lang": "ko",
+                    "name": "걷기"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Yürüyüş"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Đi bộ"
+                },
+                {
+                    "lang": "id",
+                    "name": "Berjalan"
+                },
+                {
+                    "lang": "th",
+                    "name": "การเดิน"
+                },
+                {
+                    "lang": "el",
+                    "name": "Περπάτημα"
+                },
+                {
+                    "lang": "he",
+                    "name": "הליכה"
+                },
+                {
+                    "lang": "no",
+                    "name": "Gåtur"
+                }
+            ]
+        },
+        {
+            "name": "Climbing",
+            "aliases": [
+                "climbing",
+                "klettern"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Klettern"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Escalade"
+                },
+                {
+                    "lang": "it",
+                    "name": "Arrampicata"
+                },
+                {
+                    "lang": "es",
+                    "name": "Escalada"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Escalada"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Klimmen"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Klättring"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Wspinaczka"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Скалолазание"
+                },
+                {
+                    "lang": "ja",
+                    "name": "クライミング"
+                },
+                {
+                    "lang": "zh",
+                    "name": "攀岩"
+                },
+                {
+                    "lang": "ar",
+                    "name": "تسلق"
+                },
+                {
+                    "lang": "hi",
+                    "name": "चढ़ाई"
+                },
+                {
+                    "lang": "bn",
+                    "name": "চড়াই"
+                },
+                {
+                    "lang": "ko",
+                    "name": "등반"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Tırmanış"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Leo núi"
+                },
+                {
+                    "lang": "id",
+                    "name": "Memanjat"
+                },
+                {
+                    "lang": "th",
+                    "name": "ปีนเขา"
+                },
+                {
+                    "lang": "el",
+                    "name": "Αναρρίχηση"
+                },
+                {
+                    "lang": "he",
+                    "name": "טיפוס"
+                },
+                {
+                    "lang": "no",
+                    "name": "Klatring"
+                }
+            ]
+        },
+        {
+            "name": "Biking",
+            "aliases": [
+                "cycling",
+                "biking",
+                "radfahren"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Radfahren"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Vélo"
+                },
+                {
+                    "lang": "it",
+                    "name": "Ciclismo"
+                },
+                {
+                    "lang": "es",
+                    "name": "Ciclismo"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Ciclismo"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Fietsen"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Cykling"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Jazda na rowerze"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Велоспорт"
+                },
+                {
+                    "lang": "ja",
+                    "name": "サイクリング"
+                },
+                {
+                    "lang": "zh",
+                    "name": "骑自行车"
+                },
+                {
+                    "lang": "ar",
+                    "name": "ركوب الدراجات"
+                },
+                {
+                    "lang": "hi",
+                    "name": "साइकिल चलाना"
+                },
+                {
+                    "lang": "bn",
+                    "name": "সাইক্লিং"
+                },
+                {
+                    "lang": "ko",
+                    "name": "자전거 타기"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Bisiklet Sürme"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Đi xe đạp"
+                },
+                {
+                    "lang": "id",
+                    "name": "Bersepeda"
+                },
+                {
+                    "lang": "th",
+                    "name": "การปั่นจักรยาน"
+                },
+                {
+                    "lang": "el",
+                    "name": "Ποδηλασία"
+                },
+                {
+                    "lang": "he",
+                    "name": "רכיבה על אופניים"
+                },
+                {
+                    "lang": "no",
+                    "name": "Sykling"
+                }
+            ]
+        },
+        {
+            "name": "Skiing",
+            "aliases": [
+                "skiing",
+                "skifahren"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Skifahren"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Ski"
+                },
+                {
+                    "lang": "it",
+                    "name": "Sci"
+                },
+                {
+                    "lang": "es",
+                    "name": "Esquí"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Esqui"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Skiën"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Skidåkning"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Narciarstwo"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Лыжи"
+                },
+                {
+                    "lang": "ja",
+                    "name": "スキー"
+                },
+                {
+                    "lang": "zh",
+                    "name": "滑雪"
+                },
+                {
+                    "lang": "ar",
+                    "name": "التزلج"
+                },
+                {
+                    "lang": "hi",
+                    "name": "स्कीइंग"
+                },
+                {
+                    "lang": "bn",
+                    "name": "স্কিইং"
+                },
+                {
+                    "lang": "ko",
+                    "name": "스키 타기"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Kayak"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Trượt tuyết"
+                },
+                {
+                    "lang": "id",
+                    "name": "Bermain Ski"
+                },
+                {
+                    "lang": "th",
+                    "name": "การเล่นสกี"
+                },
+                {
+                    "lang": "el",
+                    "name": "Σκι"
+                },
+                {
+                    "lang": "he",
+                    "name": "סקי"
+                },
+                {
+                    "lang": "no",
+                    "name": "Skiing"
+                }                
+            ]
+        },
+        {
+            "name": "Canoeing",
+            "aliases": [
+                "canoeing",
+                "kanu",
+                "kanufahren"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Kanufahren"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Canoë"
+                },
+                {
+                    "lang": "it",
+                    "name": "Canoa"
+                },
+                {
+                    "lang": "es",
+                    "name": "Canotaje"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Canoagem"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Kanoën"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Kanotpaddling"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Kajakarstwo"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Каноэ"
+                },
+                {
+                    "lang": "ja",
+                    "name": "カヌー"
+                },
+                {
+                    "lang": "zh",
+                    "name": "划独木舟"
+                },
+                {
+                    "lang": "ar",
+                    "name": "التجديف بالكاياك"
+                },
+                {
+                    "lang": "hi",
+                    "name": "कैनोइंग"
+                },
+                {
+                    "lang": "bn",
+                    "name": "ক্যানুইং"
+                },
+                {
+                    "lang": "ko",
+                    "name": "카누 타기"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Kano"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Chèo thuyền kayak"
+                },
+                {
+                    "lang": "id",
+                    "name": "Berkano"
+                },
+                {
+                    "lang": "th",
+                    "name": "การพายเรือคายัค"
+                },
+                {
+                    "lang": "el",
+                    "name": "Κανόε-καγιάκ"
+                },
+                {
+                    "lang": "he",
+                    "name": "קיאקים"
+                },
+                {
+                    "lang": "no",
+                    "name": "Kanoing"
+                }
+            ]
+        },
+        {
+            "name": "Driving",
+            "aliases": [
+                "driving",
+                "auto",
+                "car",
+                "fahren"
+            ],
+            "i18n": [
+                {
+                    "lang": "de",
+                    "name": "Fahren"
+                },
+                {
+                    "lang": "fr",
+                    "name": "Conduire"
+                },
+                {
+                    "lang": "it",
+                    "name": "Guidare"
+                },
+                {
+                    "lang": "es",
+                    "name": "Conducir"
+                },
+                {
+                    "lang": "pt",
+                    "name": "Dirigir"
+                },
+                {
+                    "lang": "nl",
+                    "name": "Rijden"
+                },
+                {
+                    "lang": "sv",
+                    "name": "Köra"
+                },
+                {
+                    "lang": "pl",
+                    "name": "Jazda"
+                },
+                {
+                    "lang": "ru",
+                    "name": "Вождение"
+                },
+                {
+                    "lang": "ja",
+                    "name": "運転"
+                },
+                {
+                    "lang": "zh",
+                    "name": "驾驶"
+                },
+                {
+                    "lang": "ar",
+                    "name": "القيادة"
+                },
+                {
+                    "lang": "hi",
+                    "name": "ड्राइविंग"
+                },
+                {
+                    "lang": "bn",
+                    "name": "ড্রাইভিং"
+                },
+                {
+                    "lang": "ko",
+                    "name": "운전"
+                },
+                {
+                    "lang": "tr",
+                    "name": "Sürüş"
+                },
+                {
+                    "lang": "vi",
+                    "name": "Lái xe"
+                },
+                {
+                    "lang": "id",
+                    "name": "Mengemudi"
+                },
+                {
+                    "lang": "th",
+                    "name": "การขับรถ"
+                },
+                {
+                    "lang": "el",
+                    "name": "Οδήγηση"
+                },
+                {
+                    "lang": "he",
+                    "name": "נהיגה"
+                },
+                {
+                    "lang": "no",
+                    "name": "Kjøring"
+                }
+            ]
+        }
+    ]
+}
