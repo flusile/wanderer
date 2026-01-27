@@ -1315,13 +1315,14 @@ func bootstrapCategories(app core.App) error {
 			for _, i18n := range element.I18n {
 				i18nRecord := core.NewRecord(i18n_coll)
 				i18nRecord.Set("category", record.Id)
-				i18nRecord.Set("lang", i18n.Lang)
+				lang := strings.ToLower(i18n.Lang)
+				i18nRecord.Set("lang", lang)
 				i18nRecord.Set("name", i18n.Name)
 				err = app.Save(i18nRecord)
 				if err != nil {
 					return err
 				}
-				if i18n.Lang == "en" {
+				if lang == "en" {
 					has_en = true
 				}
 			}
@@ -1342,7 +1343,7 @@ func bootstrapCategories(app core.App) error {
 			for _, alias := range element.Aliases {
 				aliasRecord := core.NewRecord(alias_coll)
 				aliasRecord.Set("category", record.Id)
-				aliasRecord.Set("alias", alias)
+				aliasRecord.Set("alias", strings.ToLower(alias))
 				err = app.Save(aliasRecord)
 				if err != nil {
 					return err
