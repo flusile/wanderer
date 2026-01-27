@@ -16,7 +16,7 @@ import { bbox, splitMultiLineStringToLineStrings } from "./geojson_util";
 import { trails_show } from "$lib/stores/trail_store";
 import { handleFromRecordWithIRI } from "./activitypub_util";
 import { Waypoint } from "$lib/models/waypoint";
-
+import { getCategoryFromGPX } from "./find_category";
 
 export async function gpx2trail(gpxString: string, fallbackName?: string, correctElevation: boolean = false, f: (url: RequestInfo | URL, config?: RequestInit) => Promise<Response> = fetch) {
 
@@ -72,6 +72,10 @@ export async function gpx2trail(gpxString: string, fallbackName?: string, correc
     trail.elevation_loss = totals.elevationLoss;
     trail.distance = totals.distance
 
+    const analysisResult = await getCategoryFromGPX(gpx);
+    if (analysisResult) {
+        trail.category = analysisResult;
+    }
     return { gpx: gpx, trail: trail }
 }
 

@@ -8,7 +8,7 @@ export default class Track {
   src?: string;
   number?: number;
   type?: string;
-  extensions?: string;
+  extensions?: object;
   link?: Link[];
   trkseg?: TrackSegment[];
   constructor(object: {
@@ -18,7 +18,7 @@ export default class Track {
     src?: string,
     number?: number,
     type?: string,
-    extensions?: string,
+    extensions?: object,
     link?: Link | Link[],
     trkseg?: TrackSegment | TrackSegment[]
   }) {
