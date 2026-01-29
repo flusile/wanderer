@@ -90,6 +90,14 @@ func init() {
 			return err
 		}
 
+		// update collection data
+		if err := json.Unmarshal([]byte(`{
+			"listRule": "",
+			"viewRule": ""
+		}`), &collection); err != nil {
+			return err
+		}
+
 		return app.Save(collection)
 	}, func(app core.App) error {
 		collection, err := app.FindCollectionByNameOrId("pbc_2258978242")

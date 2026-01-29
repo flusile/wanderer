@@ -4,7 +4,7 @@
 import type GPX from "$lib/models/gpx/gpx";
 import type Track from "$lib/models/gpx/track";
 import PocketBase from 'pocketbase';
-import { env } from "process";
+import { getPb } from "$lib/pocketbase";
 
 
 /** Helper: return first element if array */
@@ -40,7 +40,7 @@ export async function getCategoryFromGPX(gpx: GPX): Promise<string | null> {
 
 async function mapCategoryToActivity(categoryString: string): Promise<string | null> {
     const target = categoryString.toLowerCase();
-    const pb = new PocketBase(env.PUBLIC_POCKETBASE_URL);
+    const pb = getPb();
     const record = await pb.collection('categories_aliases').getFirstListItem('alias="' + target + '"', 
         { expand: 'category' });
 

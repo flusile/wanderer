@@ -1287,7 +1287,7 @@ func bootstrapCategories(app core.App) error {
 		return err
 	}
 
-	if true || len(records) == 0 {
+	if len(records) == 0 {
 		// this is the initial load or admin has deleted all categories, so we re-create the default ones
 		cc, err := util.LoadCategoryConfig("migrations/initial_data/category_config.json")
 		if err != nil {
