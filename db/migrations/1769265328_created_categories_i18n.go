@@ -91,29 +91,16 @@ func init() {
 			],
 			"id": "pbc_1227468162",
 			"indexes": [],
-			"listRule": null,
+			"listRule": "",
 			"name": "categories_i18n",
 			"system": false,
 			"type": "base",
 			"updateRule": null,
-			"viewRule": null
+			"viewRule": ""
 		}`
 
 		collection := &core.Collection{}
 		if err := json.Unmarshal([]byte(jsonData), &collection); err != nil {
-			return err
-		}
-
-		collection, err := app.FindCollectionByNameOrId("pbc_1227468162")
-		if err != nil {
-			return err
-		}
-
-		// update collection data
-		if err := json.Unmarshal([]byte(`{
-			"listRule": "",
-			"viewRule": ""
-		}`), &collection); err != nil {
 			return err
 		}
 
