@@ -1280,26 +1280,57 @@ func bootstrapData(app core.App, client meilisearch.ServiceManager) error {
 }
 
 func bootstrapCategories(app core.App) error {
-	query := app.RecordQuery("categories")
-	records := []*core.Record{}
 
-	if err := query.All(&records); err != nil {
+	{
+		query := app.RecordQuery("categories")
+		records := []*core.Record{}
+
+		if err := query.All(&records); err != nil {
+			return err
+		}
+	}
+
+	// load the defaults to check with what we have
+	cc, err := util.LoadCategoryConfig("migrations/initial_data/category_config.json")
+	if err != nil {
 		return err
 	}
 
-	if len(records) == 0 {
-		// this is the initial load or admin has deleted all categories, so we re-create the default ones
-		cc, err := util.LoadCategoryConfig("migrations/initial_data/category_config.json")
+	cat_coll, _ := app.FindCollectionByNameOrId("categories")
+	i18n_coll, _ := app.FindCollectionByNameOrId("categories_i18n")
+	alias_coll, _ := app.FindCollectionByNameOrId("categories_aliases")
+
+	for _, element := range cc.Categories {
+		// first, check if category already exists (by name)
+		existing, err := app.FindAllRecords(cat_coll, dbx.NewExp("name = {:name}", dbx.Params{"name": element.Name}))
 		if err != nil {
 			return err
 		}
 
-		cat_coll, _ := app.FindCollectionByNameOrId("categories")
-		i18n_coll, _ := app.FindCollectionByNameOrId("categories_i18n")
-		alias_coll, _ := app.FindCollectionByNameOrId("categories_aliases")
+		// to save the result, if already found or created
+		var record *core.Record
 
-		for _, element := range cc.Categories {
-			record := core.NewRecord(cat_coll)
+		if len(existing) > 1 {
+			// more than one existing, delete all
+			// will be recreated in next step
+			for _, dup := range existing[0:] {
+				record, err := app.FindRecordById(cat_coll, dup.Id)
+				if err != nil {
+					return err
+				}
+
+				err = app.Delete(record)
+				if err != nil {
+					return err
+				}
+
+				existing = nil
+			}
+		}
+
+		if len(existing) == 0 {
+			// not existing or just deleted, so create one
+			record = core.NewRecord(cat_coll)
 			record.Set("name", element.Name)
 			f, err := filesystem.NewFileFromPath("migrations/initial_data/" + strings.ToLower(element.Name) + ".jpg")
 			if err == nil {
@@ -1309,38 +1340,42 @@ func bootstrapCategories(app core.App) error {
 			if err != nil {
 				return err
 			}
+		} else { // exactly one existing
+			record = existing[0]
+		}
 
-			// now all i18n entries
-			has_en := false
-			for _, i18n := range element.I18n {
+		// now we have the category record
+		// now add all i18n entries
+		for _, i18n := range element.I18n {
+			lang := strings.ToLower(i18n.Lang)
+			existing, err := app.FindAllRecords(i18n_coll,
+				dbx.NewExp("lang = {:lang} AND category = {:category}",
+					dbx.Params{"lang": lang, "category": record.Id}))
+			if err != nil {
+				return err
+			}
+			if len(existing) == 0 {
 				i18nRecord := core.NewRecord(i18n_coll)
 				i18nRecord.Set("category", record.Id)
-				lang := strings.ToLower(i18n.Lang)
 				i18nRecord.Set("lang", lang)
 				i18nRecord.Set("name", i18n.Name)
 				err = app.Save(i18nRecord)
 				if err != nil {
 					return err
 				}
-				if lang == "en" {
-					has_en = true
-				}
 			}
+		}
 
-			if !has_en {
-				// ensure we have an english entry
-				i18nRecord := core.NewRecord(i18n_coll)
-				i18nRecord.Set("category", record.Id)
-				i18nRecord.Set("lang", "en")
-				i18nRecord.Set("name", element.Name)
-				err = app.Save(i18nRecord)
-				if err != nil {
-					return err
-				}
+		// now all alias entries
+		for _, Alias := range element.Aliases {
+			alias := strings.ToLower(strings.TrimSpace(Alias))
+			existing, err := app.FindAllRecords(alias_coll,
+				dbx.NewExp("alias = {:alias} AND category = {:category}",
+					dbx.Params{"alias": alias, "category": record.Id}))
+			if err != nil {
+				return err
 			}
-
-			// now all alias entries
-			for _, alias := range element.Aliases {
+			if len(existing) == 0 {
 				aliasRecord := core.NewRecord(alias_coll)
 				aliasRecord.Set("category", record.Id)
 				aliasRecord.Set("alias", strings.ToLower(alias))
@@ -1351,6 +1386,7 @@ func bootstrapCategories(app core.App) error {
 			}
 		}
 	}
+
 	return nil
 }
 
