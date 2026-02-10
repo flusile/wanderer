@@ -1,0 +1,192 @@
+networks:
+  default: # from the outside to traefik
+    driver: bridge
+  traefik: # from traefik to dockerproxy
+    internal: true
+  wanderer: # for wanderer internal communication
+    internal: true
+
+x-common-env: &cenv
+  MEILI_URL: http://wanderer-search:7700
+  MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+
+services:
+  watchtower:
+    # https://watchtower.nickfedor.com/v1.12.3/
+    #command: --label-enable --cleanup --interval 300
+    #command: --update-on-start --log-level info --label-enable --cleanup --interval 300
+    # start once per day at 02:10:00
+    # --schedule "sec min hour dayofmonth month dayofweek"
+    command: --label-enable --log-level info --cleanup --schedule "0 10 2 * * *"
+    container_name: watch-tower
+    image: nickfedor/watchtower
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    mem_limit: 100M
+
+  dockerproxy:
+    depends_on:
+      - watchtower
+    container_name: docker-proxy
+    environment:
+      CONTAINERS: 1
+    image: tecnativa/docker-socket-proxy
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    mem_limit: 100M
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "10m" # file size
+
+  traefik:
+    depends_on:
+      - dockerproxy
+      - watchtower
+    image: traefik:v3
+    container_name: traefik
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    networks:
+      - default
+      - traefik
+    ports:
+      - 80:80
+      - 443:443
+      - 8090:8090
+    volumes:
+      - ${TRAEFIK_BASE}/acme.json:/acme.json
+      - ${TRAEFIK_BASE}/traefik.yaml:/etc/traefik/traefik.yaml
+      - ${TRAEFIK_BASE}/tmp:/tmp
+    mem_limit: 500M
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "10m" # file size
+
+  wanderer-search:
+    container_name: wanderer-search
+    image: getmeili/meilisearch:v1.11.3
+    environment:
+      <<: *cenv
+      MEILI_NO_ANALYTICS: "true"
+    networks:
+      - wanderer
+    volumes:
+      - ${WANDERER_BASE}/data.ms:/meili_data/data.ms
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    healthcheck:
+      test: curl --fail http://localhost:7700/health || exit 1
+      interval: 15s
+      retries: 10
+      start_period: 20s
+      timeout: 10s
+    mem_limit: 1G
+    memswap_limit: 5120M
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "10m" # file size
+
+  wanderer-db:
+    # PocketBase service as base for wanderer
+    # has to be public for administration
+    container_name: wanderer-db
+    image: flomp/wanderer-db:$WANDERER_VER
+    depends_on:
+      wanderer-search:
+        condition: service_healthy
+    environment:
+      <<: *cenv
+      POCKETBASE_ENCRYPTION_KEY: ${POCKETBASE_ENCRYPTION_KEY}
+      ORIGIN: https://wanderer.${DOMAIN}
+    # remove network "default" to make this service invisible from internet
+    # additionaly or alternatively set label traefik.enable=false
+    networks:
+      - wanderer
+      - default
+    restart: unless-stopped
+    volumes:
+      - ${WANDERER_BASE}/pb_data:/pb_data
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.docker.network=traefik_default
+      - traefik.http.routers.wandererdb.entrypoints=wandererpb
+      - traefik.http.routers.wandererdb.rule=Host(`wanderer.${DOMAIN}`)
+      - traefik.http.routers.wandererdb.tls=true
+      - traefik.http.routers.wandererdb.tls.certresolver=default
+      - traefik.http.services.wandererdb.loadbalancer.server.port=8090
+    user: 1001:1001
+    healthcheck:
+      test: ["CMD", "/curl", "--fail", "http://localhost:8090/health"]
+      interval: 15s
+      retries: 10
+      start_period: 20s
+      timeout: 10s
+    mem_limit: 200M
+    memswap_limit: 5120M
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "10m" # file size
+
+  wanderer-web:
+    container_name: wanderer-web
+    image: flomp/wanderer-web:$WANDERER_VER
+    depends_on:
+      wanderer-search:
+        condition: service_healthy
+      wanderer-db:
+        condition: service_healthy
+    environment:
+      <<: *cenv
+      ORIGIN: https://wanderer.${DOMAIN}
+      BODY_SIZE_LIMIT: Infinity
+      PUBLIC_POCKETBASE_URL: http://wanderer-db:8090
+      PUBLIC_DISABLE_SIGNUP: "true"
+      UPLOAD_FOLDER: /app/uploads
+      UPLOAD_USER: ${UPLOAD_USER}
+      UPLOAD_PASSWORD: ${UPLOAD_PASSWORD}
+      PUBLIC_OVERPASS_API_URL: https://overpass-api.de
+      PUBLIC_VALHALLA_URL: https://valhalla1.openstreetmap.de
+      PUBLIC_NOMINATIM_URL: https://nominatim.openstreetmap.org
+    volumes:
+      - ${WANDERER_BASE}/uploads:/app/uploads
+    networks:
+      - wanderer
+      - default
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=false
+      - traefik.enable=true
+      - traefik.docker.network=traefik_default
+      - traefik.http.routers.wanderer.rule=Host(`wanderer.${DOMAIN}`)
+      - traefik.http.routers.wanderer.tls=true
+      - traefik.http.routers.wanderer.tls.certresolver=default
+      - traefik.http.services.wanderer.loadbalancer.server.port=3000
+    healthcheck:
+      test: ["CMD", "/curl", "--fail", "http://localhost:3000/"]
+      interval: 15s
+      retries: 10
+      start_period: 20s
+      timeout: 10s
+    mem_limit: 500M
+    memswap_limit: 5120M
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "10m" # file size

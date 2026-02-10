@@ -1,0 +1,34 @@
+log:
+  level: WARN
+
+providers:
+  docker:
+    exposedByDefault: false
+    endpoint: tcp://dockerproxy:2375
+    network: traefik
+
+api: {}
+
+entryPoints:
+  web:
+    address: :80
+  websecure:
+    address: :443
+  dashboard:
+    address: :8080
+  wandererpb:
+    address: :8090
+
+certificatesResolvers:
+  default:
+    acme:
+      email: your@email.tld
+      storage: acme.json
+      tlsChallenge: {}
+
+http:
+  middlewares:
+    testHeader:
+      headers:
+        frameDeny: true
+        sslRedirect: true
