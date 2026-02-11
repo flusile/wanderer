@@ -154,7 +154,7 @@ services:
       ORIGIN: https://wanderer.${DOMAIN}
       BODY_SIZE_LIMIT: Infinity
       PUBLIC_POCKETBASE_URL: https://wanderer.${DOMAIN}:8090
-      PUBLIC_DISABLE_SIGNUP: "true"
+      PUBLIC_DISABLE_SIGNUP: false
       UPLOAD_FOLDER: /app/uploads
       UPLOAD_USER: ${UPLOAD_USER}
       UPLOAD_PASSWORD: ${UPLOAD_PASSWORD}
