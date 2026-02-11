@@ -20,3 +20,8 @@ mkdir -p ${WANDERER_BASE}/pb_data
 mkdir -p ${WANDERER_BASE}/uploads
 
 echo "please change your DOMAIN in the .env file before starting docker compose"
+
+if ! [ -f stopp ]
+then
+    ln start stopp
+fi

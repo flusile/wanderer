@@ -120,7 +120,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.docker.network=traefik_default
+      - traefik.docker.network=${PROJECT}_default
       - traefik.http.routers.wandererdb.entrypoints=wandererpb
       - traefik.http.routers.wandererdb.rule=Host(`wanderer.${DOMAIN}`)
       - traefik.http.routers.wandererdb.tls=true
@@ -170,7 +170,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.docker.network=traefik_default
+      - traefik.docker.network=${PROJECT}_default
       - traefik.http.routers.wanderer.rule=Host(`wanderer.${DOMAIN}`)
       - traefik.http.routers.wanderer.tls=true
       - traefik.http.routers.wanderer.tls.certresolver=default
