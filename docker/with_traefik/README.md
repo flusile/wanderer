@@ -19,7 +19,7 @@ Assume that your host has the hostname myservices.net. The wanderer service then
 Other services, e.g. nextcloud, can be reachable under nextcloud.myservices.net.
 
 For that your dns entry should route any subdomain of your hostname to yor host. Please check taht with you hosting provider.
-And beeing there, please check the firewall settings. We need the tcp ports 80, 443 and 8090 open for both ipv4 and ipv6.
+And beeing there, please check the firewall settings. We need the tcp ports 80, 443 open for both ipv4 and ipv6.
 
 Please note: any script and config here is given with best effort. Please make sure you understand what they do.
 
@@ -39,12 +39,6 @@ After this you should check:
 Now you are ready to start the instance using the ./start script given.
 
 To shut it down simply use ./stopp.
-
-After starting it for the first time you have to create a superuser in pocketbase. You can use the following command:
-
-```sh
-docker exec wanderer-db /pocketbase superuser upsert **email** **password**
-```
 
 ## the files in detail
 
@@ -125,3 +119,19 @@ The have to be set with the proper credentials and can be changed at any time.
 Changes take effect after starting docker compose the next time
 
 The *_KEY-vars are not part of the template. They will be created and added to the final .env file by the init.sh script.
+
+## pocketbase
+
+Normally no access to pocketbase is needed.
+But if you want to change settings, e.g. trail categories, or look into the logs of pocketbase,
+you need access to the pocketbase admin view.
+
+For that you have to create a superuser in pocketbase. You can use the following command:
+
+```sh
+docker exec wanderer-db /pocketbase superuser upsert **email** **password**
+```
+
+To reach the pocketbase view from outside of the host you have to change the label in the wanderer-db service from traefik.enable=false to traefik.enable=true.
+
+After restarting docker compose (using ./start) you can reach the view using https://wanderer.$DOMAIN:8090. And please replace $DOMAIN with your domain.
