@@ -1,0 +1,37 @@
+#!/bin/bash
+
+cd $(dirname $(readlink -f $0))
+
+if ! [ -f .env ]
+then
+    echo "no .env file found, exiting"
+    exit 1
+fi
+
+if ! [ -f *compose.yaml ]
+then
+    echo "no docker compose file found, exiting"
+    exit 1
+fi
+
+. .env
+
+if [ -z "$PROJECT" ]
+then
+    PROJECT=$(basename $PWD)
+    echo "using dirname as project: $PROJECT"
+    echo "PROJECT=$PROJECT" >>.env
+fi
+
+case $(basename $0) in
+    (start)
+        docker compose -p $PROJECT up -d --remove-orphans
+    ;;
+    (stopp)
+        docker compose -p $PROJECT down
+    ;;
+    (*)
+        echo "illegale name for script, please use start and stopp"
+        exit 1
+    ;;
+esac
