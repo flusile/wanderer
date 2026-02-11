@@ -31,7 +31,7 @@ case $(basename $0) in
         docker compose -p $PROJECT down
     ;;
     (*)
-        echo "illegale name for script, please use start and stopp"
+        echo "illegal name for script used, please use start and stopp"
         exit 1
     ;;
 esac
