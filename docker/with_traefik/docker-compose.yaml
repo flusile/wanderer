@@ -101,7 +101,7 @@ services:
 
   wanderer-db:
     # PocketBase service as base for wanderer
-    # has to be public for administration
+    # has to be public for administration and activity pub
     container_name: wanderer-db
     image: flomp/wanderer-db:$WANDERER_VER
     depends_on:
@@ -111,8 +111,6 @@ services:
       <<: *cenv
       POCKETBASE_ENCRYPTION_KEY: ${POCKETBASE_ENCRYPTION_KEY}
       ORIGIN: https://wanderer.${DOMAIN}
-    # remove network "default" to make this service invisible from internet
-    # additionaly or alternatively set label traefik.enable=false
     networks:
       - wanderer
       - default
@@ -155,7 +153,7 @@ services:
       <<: *cenv
       ORIGIN: https://wanderer.${DOMAIN}
       BODY_SIZE_LIMIT: Infinity
-      PUBLIC_POCKETBASE_URL: http://wanderer-db:8090
+      PUBLIC_POCKETBASE_URL: https://wanderer.${DOMAIN}:8090
       PUBLIC_DISABLE_SIGNUP: "true"
       UPLOAD_FOLDER: /app/uploads
       UPLOAD_USER: ${UPLOAD_USER}
@@ -170,7 +168,7 @@ services:
       - default
     restart: unless-stopped
     labels:
-      - com.centurylinklabs.watchtower.enable=false
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.docker.network=traefik_default
       - traefik.http.routers.wanderer.rule=Host(`wanderer.${DOMAIN}`)

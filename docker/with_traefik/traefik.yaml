@@ -14,8 +14,6 @@ entryPoints:
     address: :80
   websecure:
     address: :443
-  dashboard:
-    address: :8080
   wandererpb:
     address: :8090
 
@@ -25,10 +23,3 @@ certificatesResolvers:
       email: your@email.tld
       storage: acme.json
       tlsChallenge: {}
-
-http:
-  middlewares:
-    testHeader:
-      headers:
-        frameDeny: true
-        sslRedirect: true
