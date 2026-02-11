@@ -54,7 +54,12 @@ Additional to the docker-compose.yaml-Files given in the folder above we add the
 
 - internal networks to seperate traffic
 - the services mentioned above (traefik, docker-proxy, watchtower)
-- we use the internal networks to make sure that meilisearch (wanderer-search) is accessible only by wanderer-web and wanderer-db
+- internal networks to make sure that meilisearch (wanderer-search) is accessible only by wanderer-web and wanderer-db
+- more specific names for the services, prefixed with wanderer-
+  So we won't run into name conflicts when adding other services, e.g. nextcloud or immich, to the setup.
+- instead of docker volumes we use dedicated folders on the host to mount into the wanderer containers.
+  This gives the chance to put it where we want and is easier for backup
+- definition for logging and limits for cpu and memory to avoid exhausting the ressources of the host
 
 ### traefik.template.yaml
 
