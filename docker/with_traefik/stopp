@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $(dirname $(readlink -f $0))
+
+if [ -x ./start ]
+then
+    source ./start
+else
+    echo "oops canot find start script, exiting"
+    exit 1
+fi

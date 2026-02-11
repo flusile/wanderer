@@ -32,7 +32,6 @@ services:
     container_name: docker-proxy
     environment:
       CONTAINERS: 1
-      LOG_LEVEL: debug
     image: tecnativa/docker-socket-proxy
     labels:
       - com.centurylinklabs.watchtower.enable=true
