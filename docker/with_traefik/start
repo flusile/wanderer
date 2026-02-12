@@ -20,7 +20,7 @@ if [ -z "$COMPOSE_PROJECT_NAME" ]
 then
     COMPOSE_PROJECT_NAME=$(basename $PWD)
     echo "using dirname as project: $COMPOSE_PROJECT_NAME"
-    echo "PROJECT=$COMPOSE_PROJECT_NAME" >>.env
+    echo "COMPOSE_PROJECT_NAME=$COMPOSE_PROJECT_NAME" >>.env
 fi
 
 case $(basename $0) in

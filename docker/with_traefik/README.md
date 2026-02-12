@@ -93,7 +93,7 @@ If you want to have it somwhere else on your host, please change the value in th
 
 The domain of your host. See above for explanation.
 
-#### WANDERER_VER
+#### WANDERER_VERSION
 
 The image tag for the wanderer docker images.
 
@@ -118,11 +118,12 @@ The UPLOAD_*-vars are needed by the cron job for importing track files.
 The have to be set with the proper credentials and can be changed at any time.
 Changes take effect after starting docker compose the next time
 
-The *_KEY-vars are not part of the template. They will be created and added to the final .env file by the init.sh script.
+The *_KEY-vars are not part of .env.template. They will be created and added to the final .env file by the init.sh script.
 
 ## pocketbase
 
 Normally no access to pocketbase is needed.
+
 But if you want to change settings, e.g. trail categories, or look into the logs of pocketbase,
 you need access to the pocketbase admin view.
 
@@ -134,4 +135,4 @@ docker exec wanderer-db /pocketbase superuser upsert **email** **password**
 
 To reach the pocketbase view from outside of the host you have to change the label in the wanderer-db service from traefik.enable=false to traefik.enable=true.
 
-After restarting docker compose (using ./start) you can reach the view using https://wanderer.$DOMAIN:8090. And please replace $DOMAIN with your domain.
+After restarting docker compose (using ./start) you can reach the view using https://wanderer.$DOMAIN:8090. And please replace $DOMAIN with your domain here.
