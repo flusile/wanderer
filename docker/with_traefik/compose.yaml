@@ -103,7 +103,7 @@ services:
     # PocketBase service as base for wanderer
     # has to be public for administration and activity pub
     container_name: wanderer-db
-    image: flomp/wanderer-db:$WANDERER_VER
+    image: flomp/wanderer-db:$WANDERER_VERSION
     depends_on:
       wanderer-search:
         condition: service_healthy
@@ -143,7 +143,7 @@ services:
 
   wanderer-web:
     container_name: wanderer-web
-    image: flomp/wanderer-web:$WANDERER_VER
+    image: flomp/wanderer-web:$WANDERER_VERSION
     depends_on:
       wanderer-search:
         condition: service_healthy

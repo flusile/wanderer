@@ -99,7 +99,7 @@ The image tag for the wanderer docker images.
 
 You can change it to pin your installation to a specific version.
 
-#### PROJECT
+#### COMPOSE_PROJECT_NAME
 
 Defaults to the name of your directory. Is used by docker compose and traefik to determine networks etc.
 
